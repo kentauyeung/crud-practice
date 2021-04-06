@@ -1,22 +1,15 @@
 const express = require('express')
 const app = express()
-const mongoose = require('mongoose')
-const dotenv = require('dotenv')
+const MongoClient = require('mongodb').MongoClient
+require('dotenv').config()
 
-const TodoTask = require('./models/TodoTask')
+let dbConnectionString = process.env.DB_STRING
 
-dotenv.config()
+MongoClient.connect(dbConnectionString, { useUnifiedTopology: true})
 
 app.use('/static', express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 
-mongoose.startSession('useFindAndModify', false)
-
-mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true }, () => {
-    console.log('Connected to DB...')
-
-    app.listen(3000, () => console.log('Server running...'))
-})
 
 app.set('view engine', 'ejs')
 
@@ -38,3 +31,6 @@ app.post('/', async (req, res) => {
     }
 })
 
+app.listen(3000, () => {
+    console.log('Server running....')
+})
