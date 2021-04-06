@@ -27,12 +27,25 @@ app.get('/', async (req, res) => {
 })
 
 app.post('/addTask', (req, res) => {
-    db.collection('todoListFour').insertOne({todoServer: req.body.todoItem})
+    db.collection('todoListFour').insertOne({todoServer: req.body.todoItem, completed: false})
     .then( result => {
         console.log('Todo has been added')
         res.redirect('/')
     })
 })
+
+app.put('/markComplete', (req, res) => {
+    db.collection('todoListFour').updateOne({todoServer: req.body.anotherPokemon}, {
+        $set: {
+            completed: true
+        }
+    })
+    .then(result => {
+        console.log('Tasked Completed')
+        res.json('Completed')
+    })
+})
+
 
 app.delete('/deleteTask', (req, res) => {
     db.collection('todoListFour').deleteOne({todoServer: req.body.anotherPokemon})

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
     <title>Document</title>
 </head>
 <body>
@@ -18,7 +19,11 @@
         <ul>
         <% for (let i = 0; i < pikachu.length; i++ ) { %>
             <li class="todoItem">
+                <% if(pikachu[i].completed === true ) { %>
+                <span class='completed'><%= pikachu[i].todoServer %></span>
+                <% }else{ %>
                 <span><%= pikachu[i].todoServer %></span>
+                <% } %>
                 <span class='del'>Delete</span>
             </li>
         <% } %>
